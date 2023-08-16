@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { View, Text, ScrollView,Image, TouchableOpacity } from 'react-native'
 import useTaqueria from '../hooks/useTaqueria'
 import { AntDesign } from '@expo/vector-icons';
@@ -10,12 +10,8 @@ import bebida from '../assets/img/bebida_01.jpg'
 
 const ProductDetails = () => {
   const {productoActual} = useTaqueria()
-  const {nombre,imagen,precio,categoriaId} = productoActual;
-  console.log(productoActual.nombre)
-
-  useEffect(() => {
- 
-  }, [])
+  const {nombre,precio,categoriaId} = productoActual;
+  const [cantidad,setCantidad] = useState(1)
   
   return (
     <ScrollView>
@@ -54,11 +50,21 @@ const ProductDetails = () => {
                     alignItems:'center', 
                     marginVertical:'5%',
                 }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=> {
+                            if (cantidad <= 1) return;
+                            setCantidad(cantidad - 1);
+                        }}
+                    >
                         <AntDesign name="minuscircle" size={28} color="#33BBC5" />
                     </TouchableOpacity>
-                    <Text style={{fontSize:25}}>1</Text>
-                    <TouchableOpacity>
+                    <Text style={{fontSize:25}}>{cantidad}</Text>
+                    <TouchableOpacity
+                        onPress={()=> {
+                            if (cantidad >= 5) return;
+                            setCantidad(cantidad + 1);
+                        }}
+                    >
                         <AntDesign name="pluscircle" size={28} color="#33BBC5" />
                     </TouchableOpacity>
                 </View>
