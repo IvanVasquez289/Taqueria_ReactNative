@@ -10,6 +10,7 @@ import HomeScreen from "./screens/HomeScreen";
 import OrdenesPendientes from "./screens/OrdenesPendientes";
 import StackScreen from "./screens/StackScreen";
 import PedidoScreen from "./screens/PedidoScreen";
+import ProductDetails from "./screens/product-details/[id]";
 
 const HomeStack = createNativeStackNavigator()
 const MyStack = () => {
@@ -24,8 +25,8 @@ const MyStack = () => {
                 }}
             />
             <HomeStack.Screen 
-                name="Stack" 
-                component={StackScreen} 
+                name="ProductDetails" 
+                component={ProductDetails} 
                 options={{
                     headerBackTitle: 'Volver al menú'
                 }}

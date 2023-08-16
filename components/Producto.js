@@ -3,7 +3,11 @@ import React from 'react'
 import taco from '../assets/img/taco_01.jpg'
 import hotdog from '../assets/img/hotdog_01.jpg'
 import bebida from '../assets/img/bebida_01.jpg'
+import { useNavigation } from '@react-navigation/native'
+import useTaqueria from '../hooks/useTaqueria'
 const Producto = ({producto}) => {
+  const navigation = useNavigation()
+  const {handlePressProducto} = useTaqueria()
   const {nombre,precio,imagen,id,categoriaId} = producto;
   return (
     <View style={{ 
@@ -49,6 +53,10 @@ const Producto = ({producto}) => {
                 ${precio}
             </Text>
             <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate('ProductDetails')
+                    handlePressProducto(id)
+                }}
                 style={{
                     backgroundColor: '#33BBC5',
                     padding: 5,
