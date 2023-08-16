@@ -1,10 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useState,useEffect } from "react";
-
+import { productos as productosData} from "../data/productos";
 const TaqueriaContext = createContext()
 
 const TaqueriaProvider = ({children}) => {
     const [saludo,setSaludo] = useState('Hola desde estado')
+    const [productos, setProductos] = useState([])
 
     const setData = async () => {
         try {
@@ -14,14 +15,20 @@ const TaqueriaProvider = ({children}) => {
         }
     }
     
+    const obtenerProductos = () => {
+       setProductos(productosData)
+    }
+
     useEffect(() => {
      setData()   
+     obtenerProductos()
     }, [])
     
     return (
         <TaqueriaContext.Provider
             value={{
-                saludo
+                saludo,
+                productos
             }}
         >
             {children}

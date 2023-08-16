@@ -16,8 +16,12 @@ const MyStack = () => {
     return (
         <HomeStack.Navigator initialRouteName="HomeScreen">
             <HomeStack.Screen 
-                name="HomeScreen" 
+                name="Menú" 
                 component={HomeScreen}
+                options={{
+                    headerStyle:{backgroundColor:'orange'},
+                    headerTitleStyle:{fontSize:25, color:'white'}
+                }}
             />
             <HomeStack.Screen 
                 name="Stack" 
@@ -38,7 +42,8 @@ const MyTabs = () => {
         <Tab.Navigator
             initialRouteName="Home"
             screenOptions={{
-                tabBarActiveTintColor:'purple'
+                tabBarActiveTintColor:'orange',
+       
             }}
         >
             <Tab.Screen 
