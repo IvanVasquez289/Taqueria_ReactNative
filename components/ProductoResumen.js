@@ -1,14 +1,26 @@
 import React from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
-
+import { useEffect, useState } from 'react';
+import useTaqueria from '../hooks/useTaqueria';
 // Imagenes 
 import taco from '../assets/img/taco_01.jpg'
 import hotdog from '../assets/img/hotdog_01.jpg'
 import bebida from '../assets/img/bebida_01.jpg'
 
 const ProductoResumen = ({producto}) => {
-  const {nombre,categoriaId,precio} = producto
+  const {nombre,categoriaId,precio,id,cantidad} = producto;
+  const [cantidadPedido, setCantidadPedido] = useState(cantidad)
+  const {productos, handleSetPedido} = useTaqueria()
+  
+
+  useEffect(() => {
+    const productoActual = productos.find(productoState => productoState.id === id)
+    console.log(productoActual)
+    handleSetPedido({...productoActual,cantidadPedido})
+  }, [cantidadPedido])
+  
+
   return (
     <View style={{
         flexDirection:'row',  
@@ -51,11 +63,21 @@ const ProductoResumen = ({producto}) => {
                 marginVertical:'2%',
                 
             }}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={()=> {
+                        if (cantidadPedido <= 1) return;
+                        setCantidadPedido(cantidadPedido - 1);
+                    }}
+                >
                     <AntDesign name="minuscircleo" size={24} color="black" />
                 </TouchableOpacity>
-                <Text style={{fontSize:25}}>1</Text>
-                <TouchableOpacity>
+                <Text style={{fontSize:25}}>{cantidadPedido}</Text>
+                <TouchableOpacity
+                    onPress={()=> {
+                        if (cantidadPedido >= 5) return;
+                        setCantidadPedido(cantidadPedido + 1);
+                    }}
+                >
                     <AntDesign name="pluscircleo" size={24} color="black" />
                 </TouchableOpacity>
             </View>
