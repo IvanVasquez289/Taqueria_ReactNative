@@ -8,6 +8,7 @@ const TaqueriaProvider = ({children}) => {
     const [productos, setProductos] = useState([])
     const [productoActual, setProductoActual] = useState({})
     const [pedido, setPedido] = useState([])
+    const [total,setTotal] = useState(0)
 
     const setData = async () => {
         try {
@@ -26,6 +27,11 @@ const TaqueriaProvider = ({children}) => {
      obtenerProductos()
     }, [])
 
+    useEffect(() => {
+        const nuevoTotal = pedido.reduce((total,producto) => (producto.cantidad*producto.precio) + total, 0)
+        setTotal(nuevoTotal)
+        console.log(total)
+    }, [pedido])
 
     const handlePressProducto = (id) => {
         const producto = productos.filter(productoState => productoState.id === id)
@@ -63,7 +69,8 @@ const TaqueriaProvider = ({children}) => {
                 productoActual,
                 handleSetPedido,
                 pedido,
-                handleEliminarProducto
+                handleEliminarProducto,
+                total
             }}
         >
             {children}

@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text,ScrollView } from 'react-native'
 import useTaqueria from '../hooks/useTaqueria'
 import ProductoResumen from '../components/ProductoResumen'
+import Formulario from '../components/Formulario'
 const PedidoScreen = () => {
   const {pedido} = useTaqueria()
   console.log(pedido)
@@ -29,8 +30,9 @@ const PedidoScreen = () => {
           {pedido.length === 0 ? (
             <Text style={{fontWeight:'bold'}}>No has agregado productos a tu pedido</Text>
           ) : (
-              pedido?.map(producto => (<ProductoResumen key={producto.id} producto={producto}/>))
+            pedido?.map(producto => (<ProductoResumen key={producto.id} producto={producto}/>))
           )}
+          {pedido.length > 0 && <Formulario/>}
         </View>
       </View>
     </ScrollView>

@@ -20,6 +20,7 @@ const ProductDetails = () => {
     if(pedido.some(productoState => productoState.id === productoActual.id)){
         const producto = pedido.find(productoState => productoState.id === productoActual.id)
         setCantidad(producto.cantidad)
+        console.log(cantidad)
         setEdicion(true)
     }
   }, [pedido])
