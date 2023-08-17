@@ -7,6 +7,7 @@ const TaqueriaProvider = ({children}) => {
     const [saludo,setSaludo] = useState('Hola desde estado')
     const [productos, setProductos] = useState([])
     const [productoActual, setProductoActual] = useState({})
+    const [pedido, setPedido] = useState([])
 
     const setData = async () => {
         try {
@@ -31,13 +32,32 @@ const TaqueriaProvider = ({children}) => {
         setProductoActual(producto[0])
     }
     
+    const handleSetPedido = (producto) => {
+
+        const existeProducto = pedido.some(productoState => productoState.id === producto.id)
+        if(existeProducto){
+            console.log('Ya esta en el pedido')
+            //Actualizar cantidad 
+            const pedidoActualizado = pedido.map(productoState => productoState.id == producto.id ? producto : productoState)
+            setPedido(pedidoActualizado)
+        }else{
+            console.log('Agregando nuevo producto al pedido')
+            setPedido([...pedido,producto])
+        }
+        setProductoActual({})
+
+        console.log(pedido)
+    }
+
     return (
         <TaqueriaContext.Provider
             value={{
                 saludo,
                 productos,
                 handlePressProducto,
-                productoActual
+                productoActual,
+                handleSetPedido,
+                pedido
             }}
         >
             {children}

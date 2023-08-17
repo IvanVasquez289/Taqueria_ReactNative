@@ -3,16 +3,28 @@ import { useEffect, useState } from 'react'
 import { View, Text, ScrollView,Image, TouchableOpacity } from 'react-native'
 import useTaqueria from '../hooks/useTaqueria'
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native'
 //Imagenes 
 import taco from '../assets/img/taco_01.jpg'
 import hotdog from '../assets/img/hotdog_01.jpg'
 import bebida from '../assets/img/bebida_01.jpg'
 
 const ProductDetails = () => {
-  const {productoActual} = useTaqueria()
+  const navigation = useNavigation()
+  const {productoActual, handleSetPedido, pedido} = useTaqueria()
   const {nombre,precio,categoriaId} = productoActual;
   const [cantidad,setCantidad] = useState(1)
+  const [edicion,setEdicion] = useState(false)
   
+  useEffect(() => {
+    if(pedido.some(productoState => productoState.id === productoActual.id)){
+        const producto = pedido.find(productoState => productoState.id === productoActual.id)
+        setCantidad(producto.cantidad)
+        setEdicion(true)
+    }
+  }, [pedido])
+  
+
   return (
     <ScrollView>
         <View style={{flex:1, padding:10}}>
@@ -68,20 +80,26 @@ const ProductDetails = () => {
                         <AntDesign name="pluscircle" size={28} color="#33BBC5" />
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={{
-                    backgroundColor:'#323232',
-                    width:'80%',
-                    padding: 10,
-                    borderRadius: 4,
-                    marginBottom: '5%'
-                }}>
+                <TouchableOpacity 
+                    style={{
+                        backgroundColor:'#323232',
+                        width:'80%',
+                        padding: 10,
+                        borderRadius: 4,
+                        marginBottom: '5%'
+                    }}
+                    onPress={()=> {
+                        handleSetPedido({...productoActual,cantidad})
+                        navigation.navigate('Menú')
+                    }}
+                >
                     <Text style={{
                         textAlign:'center', 
                         color:'white',
                         fontSize:16,
                         fontWeight:'500'
                     }}>
-                        Agregar al pedido
+                        {edicion ? 'Guardar Cambios' : 'Agregar al pedido'}
                     </Text>
                 </TouchableOpacity>
             </View>

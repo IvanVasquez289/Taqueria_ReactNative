@@ -3,8 +3,8 @@ import { View, Text, ScrollView } from 'react-native'
 import useTaqueria from '../hooks/useTaqueria'
 
 const OrdenesPendientes = () => {
-  const {saludo} = useTaqueria()
-  console.log(saludo)
+  const {saludo,pedido} = useTaqueria()
+  console.log(pedido)
   return (
     <ScrollView>
       <View>
