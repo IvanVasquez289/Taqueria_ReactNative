@@ -49,6 +49,11 @@ const TaqueriaProvider = ({children}) => {
         // console.log(pedido)
     }
 
+    const handleEliminarProducto = (id) => {
+        const pedidoActualizado = pedido.filter(producto => producto.id !== id)
+        setPedido(pedidoActualizado)
+    }
+
     return (
         <TaqueriaContext.Provider
             value={{
@@ -57,7 +62,8 @@ const TaqueriaProvider = ({children}) => {
                 handlePressProducto,
                 productoActual,
                 handleSetPedido,
-                pedido
+                pedido,
+                handleEliminarProducto
             }}
         >
             {children}

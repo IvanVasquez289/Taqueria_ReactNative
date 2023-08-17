@@ -11,7 +11,7 @@ import bebida from '../assets/img/bebida_01.jpg'
 const ProductoResumen = ({producto}) => {
   const {nombre,categoriaId,precio,id,cantidad} = producto;
   const [cantidadPedido, setCantidadPedido] = useState(cantidad)
-  const {productos, handleSetPedido} = useTaqueria()
+  const {productos, handleSetPedido, handleEliminarProducto} = useTaqueria()
   
 
   useEffect(() => {
@@ -81,7 +81,9 @@ const ProductoResumen = ({producto}) => {
                     <AntDesign name="pluscircleo" size={24} color="black" />
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={()=> handleEliminarProducto(id)}
+            >
                 <AntDesign name="delete" size={24} color="red" />
             </TouchableOpacity>
         </View>
