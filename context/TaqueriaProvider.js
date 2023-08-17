@@ -46,7 +46,7 @@ const TaqueriaProvider = ({children}) => {
         }
         setProductoActual({})
 
-        console.log(pedido)
+        // console.log(pedido)
     }
 
     return (
